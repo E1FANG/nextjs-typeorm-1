@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
-    "typeorm:build": "babel ./src --out-dir dist --extensions .ts,.tsx",
-    "migration:run": "typeorm migration:run",
-    "migration:revert": "typeorm migration:revert"
+    "typeorm:build": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "m:run": "typeorm migration:run",
+    "m:create": "typeorm migration:create",
+    "migration:revert": "typeorm migration:revert",
+    "entity:create": "typeorm entity:create"
   },
   "dependencies": {
     "@babel/cli": "^7.12.10",
