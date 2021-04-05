@@ -6,11 +6,11 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
-    "typeorm:build": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "t:build": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
     "m:run": "typeorm migration:run",
     "m:create": "typeorm migration:create",
     "m:revert": "typeorm migration:revert",
-    "entity:create": "typeorm entity:create"
+    "e:create": "typeorm entity:create"
   },
   "dependencies": {
     "@babel/cli": "^7.12.10",
