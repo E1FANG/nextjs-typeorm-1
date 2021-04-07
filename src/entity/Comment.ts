@@ -2,14 +2,14 @@ import {Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedC
 import {User} from './User';
 import {Post} from './Post';
 
-@Entity()
+@Entity('comments')
 export class Comment {
   @PrimaryGeneratedColumn('increment')
   id:number;
   @Column('varchar')
   content:string;
   @CreateDateColumn()
-  createAt:Date;
+  createdAt:Date;
   @CreateDateColumn()
   updatedAt:Date;
   //第一个参数：target 目标   所以对上的是User这个entity
