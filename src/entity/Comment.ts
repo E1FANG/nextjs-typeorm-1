@@ -8,9 +8,9 @@ export class Comment {
   id:number;
   @Column('varchar')
   content:string;
-  @CreateDateColumn('time')
+  @CreateDateColumn()
   createAt:Date;
-  @CreateDateColumn('time')
+  @CreateDateColumn()
   updatedAt:Date;
   //第一个参数：target 目标   所以对上的是User这个entity
   //第二个参数: inverseSide 相反的另一边 就是对面（User）  我们这边去对应对面user的comments

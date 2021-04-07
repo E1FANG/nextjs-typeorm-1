@@ -10,9 +10,9 @@ export class Post {
   title:string;
   @Column('varchar')
   content:string;
-  @CreateDateColumn('time')
+  @CreateDateColumn()
   createAt:Date;
-  @CreateDateColumn('time')
+  @CreateDateColumn()
   updatedAt:Date;
   @ManyToOne(type => User, user =>user.posts)
   author: User;

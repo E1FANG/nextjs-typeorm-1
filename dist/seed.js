@@ -10,19 +10,31 @@ require("reflect-metadata");
 
 var _typeorm = require("typeorm");
 
+var _User = require("./entity/User");
+
 //引入连接数据库的方法
 // 创建链接 连接数据库
 // 连接的是刚刚我们修改的ormconfig.json写的地址的数据库
 (0, _typeorm.createConnection)().then( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(connection) {
+    var manager, u1;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            manager = connection.manager;
+            u1 = new _User.User();
+            u1.username = 'hasson';
+            u1.passwordDigest = 'xxx';
+            _context.next = 6;
+            return manager.save(u1);
+
+          case 6:
+            console.log(u1.id);
+            _context.next = 9;
             return connection.close();
 
-          case 2:
+          case 9:
           case "end":
             return _context.stop();
         }
