@@ -8,8 +8,14 @@ const promise = (async function (){
     return createConnection()
   }else{
     console.log('复用connection');
-    return manager.get('default')
+    const current = manager.get('default')
+    if(current.isConnected){
+      return current
+    }else{
+      return createConnection()
+    }
   }
+
 })()
 
 export const getDatabaseConnection = async ()=>{
