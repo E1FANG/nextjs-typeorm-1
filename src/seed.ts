@@ -31,4 +31,5 @@ createConnection().then(async connection => {
   console.log(c1.id);
 
   await connection.close()
+  console.log('OK!');
 }).catch(error => console.log(error));
