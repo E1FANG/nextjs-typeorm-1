@@ -3,6 +3,7 @@ import {UAParser} from 'ua-parser-js';
 import React, {useEffect, useState} from 'react';
 import {getDatabaseConnection} from '../lib/getDatabaseConnection';
 import {Post} from '../src/entity/Post';
+import Link from 'next/link';
 // import {User} from '../src/entity/User';
 
 type Props = {
@@ -13,9 +14,11 @@ const index: NextPage<Props> = (props) => {
   const {posts} = props;
   return (
     <div>
-      c12345
+      <h1>文章列表</h1>
       {posts.map(post =>
-        <div key={post.id}>{post.title}</div>
+        <Link key={post.id} href={`/posts/${post.id}`}>
+          <a>{post.title}</a>
+        </Link>
       )}
     </div>
   );
