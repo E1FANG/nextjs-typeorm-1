@@ -1,7 +1,9 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Post} from './Post';
 import {Comment} from './Comment';
 import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
+import md5 from 'md5';
+import _ from 'lodash';
 
 @Entity('users')
 export class User {
@@ -24,10 +26,6 @@ export class User {
   passwordConfirmation: string;
 
   async validate() {
-    const found = await (await getDatabaseConnection()).manager.find(User, {username: this.username});
-    if (found.length>0) {
-      this.errors.username.push(`已存在，不能重复注册`);
-    }
     if (this.username.trim() === '') {
       this.errors.username.push('不能为空');
     }
@@ -46,9 +44,20 @@ export class User {
     if (this.password !== this.passwordConfirmation) {
       this.errors.passwordConfirmation.push('密码不匹配');
     }
+    const found = await (await getDatabaseConnection()).manager.find(User, {username: this.username});
+    if (found.length>0) {
+      this.errors.username.push(`已存在，不能重复注册`);
+    }
   }
 
   hasErrors() {
     return !!Object.values(this.errors).find(v => v.length > 0);
+  }
+  @BeforeInsert()  //此装饰器作用：在entity插入数据库之前执行
+  generatePasswordDigest(){
+    this.passwordDigest = md5(this.password)
+  }
+  toJSON(){
+    return  _.omit(this,['password','passwordConfirmation','passwordDigest','errors'])
   }
 }

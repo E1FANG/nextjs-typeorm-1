@@ -31,7 +31,11 @@ var _Comment = require("./Comment");
 
 var _getDatabaseConnection = require("../../lib/getDatabaseConnection");
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp;
+var _md = _interopRequireDefault(require("md5"));
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp;
 
 var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)('increment'), _dec3 = (0, _typeorm.Column)('varchar'), _dec4 = (0, _typeorm.Column)('varchar'), _dec5 = (0, _typeorm.CreateDateColumn)(), _dec6 = (0, _typeorm.CreateDateColumn)(), _dec7 = (0, _typeorm.OneToMany)(function (type) {
   return _Post.Post;
@@ -41,7 +45,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
   return _Comment.Comment;
 }, function (comment) {
   return comment.user;
-}), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function () {
+}), _dec9 = (0, _typeorm.BeforeInsert)(), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function () {
   function User() {
     (0, _classCallCheck2["default"])(this, User);
     (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
@@ -69,22 +73,6 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return (0, _getDatabaseConnection.getDatabaseConnection)();
-
-              case 2:
-                _context.next = 4;
-                return _context.sent.manager.find(User, {
-                  username: this.username
-                });
-
-              case 4:
-                found = _context.sent;
-
-                if (found.length > 0) {
-                  this.errors.username.push("\u5DF2\u5B58\u5728\uFF0C\u4E0D\u80FD\u91CD\u590D\u6CE8\u518C");
-                }
-
                 if (this.username.trim() === '') {
                   this.errors.username.push('不能为空');
                 }
@@ -109,6 +97,22 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
                   this.errors.passwordConfirmation.push('密码不匹配');
                 }
 
+                _context.next = 8;
+                return (0, _getDatabaseConnection.getDatabaseConnection)();
+
+              case 8:
+                _context.next = 10;
+                return _context.sent.manager.find(User, {
+                  username: this.username
+                });
+
+              case 10:
+                found = _context.sent;
+
+                if (found.length > 0) {
+                  this.errors.username.push("\u5DF2\u5B58\u5728\uFF0C\u4E0D\u80FD\u91CD\u590D\u6CE8\u518C");
+                }
+
               case 12:
               case "end":
                 return _context.stop();
@@ -129,6 +133,16 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
       return !!Object.values(this.errors).find(function (v) {
         return v.length > 0;
       });
+    }
+  }, {
+    key: "generatePasswordDigest",
+    value: function generatePasswordDigest() {
+      this.passwordDigest = (0, _md["default"])(this.password);
+    }
+  }, {
+    key: "toJSON",
+    value: function toJSON() {
+      return _lodash["default"].omit(this, ['password', 'passwordConfirmation', 'passwordDigest', 'errors']);
     }
   }]);
   return User;
@@ -167,5 +181,5 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
   enumerable: true,
   writable: true,
   initializer: null
-})), _class2)) || _class);
+}), (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "generatePasswordDigest", [_dec9], Object.getOwnPropertyDescriptor(_class2.prototype, "generatePasswordDigest"), _class2.prototype)), _class2)) || _class);
 exports.User = User;
