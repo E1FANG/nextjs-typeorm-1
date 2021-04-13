@@ -11,7 +11,6 @@ const SignUp: NextPage = () => {
   const [errors, setErrors] = useState({
     username: [], password: [], passwordConfirmation: []
   });
-  console.log(`cc`);
   const onSubmit = useCallback((e) => {
     e.preventDefault();
     axios.post(`/api/v1/users`, formData)
