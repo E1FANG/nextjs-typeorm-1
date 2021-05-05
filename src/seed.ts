@@ -28,7 +28,6 @@ createConnection().then(async connection => {
   c1.post = p1
   c1.content = 'Cool!'
   await manager.save(c1)
-  console.log(c1.id);
 
   await connection.close()
   console.log('OK!');
