@@ -1,4 +1,13 @@
-import {BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn, OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn, Unique,
+  UpdateDateColumn
+} from 'typeorm';
 import {Post} from './Post';
 import {Comment} from './Comment';
 import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
@@ -15,13 +24,17 @@ export class User {
   passwordDigest: string;
   @CreateDateColumn()
   createdAt: Date;
-  @CreateDateColumn()
+  @UpdateDateColumn()
   updatedAt: Date;
-  @OneToMany(type => Post, post => post.author)
+  @OneToMany('Post', 'author')
   posts: Post[];
-  @OneToMany(type => Comment, comment => comment.user)
-  comments: Comment[]; //有很多comments 一对多
-  errors = {username: [] as string[], password: [] as string[], passwordConfirmation: [] as string[]};
+  @OneToMany('Comment', 'user')
+  comments: Comment[];
+  errors = {
+    username: [] as string[],
+    password: [] as string[],
+    passwordConfirmation: [] as string[]
+  };
   password: string;
   passwordConfirmation: string;
 
@@ -38,26 +51,29 @@ export class User {
     if (this.username.trim().length <= 3) {
       this.errors.username.push('太短');
     }
+    const found = await (await getDatabaseConnection()).manager.find(
+      User, {username: this.username});
+    if (found.length > 0) {
+      this.errors.username.push('已存在，不能重复注册');
+    }
     if (this.password === '') {
       this.errors.password.push('不能为空');
     }
     if (this.password !== this.passwordConfirmation) {
       this.errors.passwordConfirmation.push('密码不匹配');
     }
-    const found = await (await getDatabaseConnection()).manager.find(User, {username: this.username});
-    if (found.length>0) {
-      this.errors.username.push(`已存在，不能重复注册`);
-    }
   }
 
   hasErrors() {
     return !!Object.values(this.errors).find(v => v.length > 0);
   }
-  @BeforeInsert()  //此装饰器作用：在entity插入数据库之前执行
-  generatePasswordDigest(){
-    this.passwordDigest = md5(this.password)
+
+  @BeforeInsert()
+  generatePasswordDigest() {
+    this.passwordDigest = md5(this.password);
   }
-  toJSON(){
-    return  _.omit(this,['password','passwordConfirmation','passwordDigest','errors'])
+
+  toJSON() {
+    return _.omit(this, ['password', 'passwordConfirmation', 'passwordDigest', 'errors']);
   }
 }
