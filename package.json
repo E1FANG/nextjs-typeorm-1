@@ -22,6 +22,7 @@
     "next": "9.4.1",
     "next-iron-session": "^4.1.13",
     "pg": "^8.5.1",
+    "query-string": "^7.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "reflect-metadata": "^0.1.13",

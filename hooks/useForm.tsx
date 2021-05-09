@@ -4,7 +4,6 @@ import {AxiosResponse} from 'axios';
 type Field<T> = {
   label: string,
   type: 'text' | 'password' | 'textarea',//字符串类型？
-  // value: string | number,
   key: keyof T
 }
 
@@ -14,7 +13,7 @@ type useFormOptions<T> = {
   buttons: ReactChild;
   submit: {
     request:(formData:T) => Promise<AxiosResponse<T>>,
-    message:string
+    success:()=>void
   }
 }
 
@@ -40,13 +39,17 @@ export function useForm<T>(options:useFormOptions<T>) {
   }, [formData]);
   const _onSubmit = useCallback((e) => {
     e.preventDefault();
-    submit.request(formData).then(() => {
-        window.alert(submit.message);
-      }, (error) => {
+    submit.request(formData).then(
+      submit.success,
+      (error) => {
         if (error.response) {
           const response: AxiosResponse = error.response;
           if (response.status === 422) {
             setErrors(response.data);
+          }else if (response.status === 401){
+            window.alert('没有登录')
+            window.location.href =
+              `/sign_in?returnTo=${encodeURI(window.location.pathname)}`
           }
         }
       }
