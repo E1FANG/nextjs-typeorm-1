@@ -5,16 +5,19 @@ import {getDatabaseConnection} from 'lib/getDatabaseConnection';
 import {Post} from 'src/entity/Post';
 import Link from 'next/link';
 import qs from 'querystring'
+import {usePager} from '../../hooks/usePager';
 
 type Props = {
   posts: Post[];
   count:number;
   perPage:number;
   page:number;
+  totalPage:number;
 }
 // 前端
 const PostsIndex: NextPage<Props> = (props) => {
-  const {posts} = props;
+  const {posts,page,totalPage} = props;
+  const {pager} = usePager({page,totalPage})
   return (
     <div>
       <h1>文章列表{props.count}</h1>
@@ -26,10 +29,7 @@ const PostsIndex: NextPage<Props> = (props) => {
         </div>
       )}
       <footer>
-        共{props.count}篇文章，当前是第{props.page}页
-        <Link href={`?page=${props.page-1}`}><a>上一页</a></Link>
-        |
-        <Link href={`?page=${props.page+1}`}><a>下一页</a></Link>
+        {pager}
       </footer>
     </div>
   );
@@ -42,8 +42,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const index = context.req.url.indexOf('?')
   const search = context.req.url.substr(index+1)
   const query = qs.parse(search)
-  const page = parseInt(query.page.toString()) || 1
-  const perPage = 3
+  const page = parseInt(query.page?.toString()) || 1
+  const perPage = 1
   const connection = await getDatabaseConnection();
   const [posts,count] = await connection.manager.findAndCount(Post,
     {skip:(page-1)*perPage,take:perPage});
@@ -51,7 +51,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
       count,
-      perPage,page
+      perPage,
+      page,
+      totalPage:Math.ceil( count/perPage)
     }
   };
 };
