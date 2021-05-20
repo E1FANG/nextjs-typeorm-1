@@ -10,7 +10,9 @@ const create = async () => {
   return createConnection({
     ...config,
     host: process.env.NODE_ENV === 'production' ? 'localhost' : config.host,
+    // host:'localhost',
     database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
+    // database: 'blog_production',
     entities: [Post, User, Comment]
   });
 };
