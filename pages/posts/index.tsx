@@ -1,5 +1,4 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
-import {UAParser} from 'ua-parser-js';
 import React, {useEffect, useState} from 'react';
 import {getDatabaseConnection} from 'lib/getDatabaseConnection';
 import {withSession} from '../../lib/withSession';
