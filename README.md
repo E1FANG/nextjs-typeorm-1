@@ -43,7 +43,8 @@ npm run dev
 ## 部署
 自动化部署：
 ```bash
-ssh blog@47.113.225.0 'sh /home/blog/app/bin/deploy.sh'
+git push
+ssh blog@47.113.225.0 'bash -s ' < bin/deploy.sh
 ```
 
 ```bash 
