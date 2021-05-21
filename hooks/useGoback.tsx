@@ -5,7 +5,7 @@ import {useRouter} from 'next/router';
 export const useGoback =()=>{
   const router = useRouter()
   const goBack = ()=>{
-    router.push('/posts')
+    router.back()
   }
   const back:ReactChild = (
     <>
