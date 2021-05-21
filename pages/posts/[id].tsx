@@ -8,6 +8,7 @@ import {withSession} from '../../lib/withSession';
 import axios from 'axios';
 import {useRouter} from 'next/router';
 import {User} from '../../src/entity/User';
+import {useGoback} from '../../hooks/useGoback';
 
 type Props = {
   id: number;
@@ -16,6 +17,7 @@ type Props = {
 }
 const postsShow: NextPage<Props> = (props) => {
   const {post, currentUser, id} = props;
+  const {back} = useGoback()
   const router = useRouter()
   const onRemove = useCallback(() => {
     axios.delete(`/api/v1/posts/${id}`).then(() => {
@@ -29,7 +31,7 @@ const postsShow: NextPage<Props> = (props) => {
     <>
       <div className="wrapper">
         <header>
-          <h1>{post.title}</h1>
+          <h1> {back}{post.title}</h1>
           {currentUser &&
           <p className="actions">
             <Link href="/posts/[id]/edit" as={`/posts/${post.id}/edit`}><a>编辑</a></Link>
