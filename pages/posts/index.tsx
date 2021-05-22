@@ -8,6 +8,7 @@ import qs from 'querystring'
 import {usePager} from '../../hooks/usePager';
 import {User} from '../../src/entity/User';
 import {useGoback} from '../../hooks/useGoback';
+import {useHeader} from '../../hooks/useHeader';
 
 type Props = {
   currentUser:User | null;
@@ -19,11 +20,13 @@ type Props = {
 }
 // 前端
 const PostsIndex: NextPage<Props> = (props) => {
+  const {PageHeader} = useHeader()
   const {currentUser,posts,page,totalPage} = props;
-  const {back} = useGoback()
+  const {back} = useGoback('/')
   const {pager} = usePager({page,totalPage})
   return (
     <>
+      {PageHeader}
       <div className="posts">
         <header>
           <h1>{back}文章列表</h1>

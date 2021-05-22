@@ -17,7 +17,7 @@ type Props = {
 }
 const postsShow: NextPage<Props> = (props) => {
   const {post, currentUser, id} = props;
-  const {back} = useGoback()
+  const {back} = useGoback('/posts')
   const router = useRouter()
   const onRemove = useCallback(() => {
     axios.delete(`/api/v1/posts/${id}`).then(() => {

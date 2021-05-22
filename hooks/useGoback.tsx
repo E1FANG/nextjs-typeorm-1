@@ -1,11 +1,17 @@
 import React, {ReactChild} from 'react';
 import {useRouter} from 'next/router';
 
+// type options = {
+//   url:string
+// }
 
-export const useGoback =()=>{
+type url = string
+
+export const useGoback =(url:url)=>{
   const router = useRouter()
   const goBack = ()=>{
-    router.back()
+    // router.back()
+    router.push(url)
   }
   const back:ReactChild = (
     <>
