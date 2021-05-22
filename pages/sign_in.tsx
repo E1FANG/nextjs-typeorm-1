@@ -23,7 +23,10 @@ const SignIn: NextPage<{ user: User }> = (props) => {
         success:()=>{
           window.alert('登录成功')
           const query = qs.parse(window.location.search.substr(1))
-          window.location.href = query.returnTo.toString()
+          console.log(query);
+          Object.keys(query).length !== 0 ?
+            window.location.href = query.returnTo.toString()
+            : window.location.href = '/posts'
         }
       }
     });
