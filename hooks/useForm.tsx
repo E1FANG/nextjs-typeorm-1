@@ -14,7 +14,7 @@ type useFormOptions<T> = {
   buttons: ReactChild;
   submit: {
     request: (formData: T) => Promise<AxiosResponse<T>>;
-    success: () => void;
+    success: (res:AxiosResponse) => void;
   }
 }
 

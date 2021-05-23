@@ -2,13 +2,10 @@ import {NextPage} from 'next';
 import Link from 'next/link';
 import React from 'react';
 import {useHeader} from '../hooks/useHeader';
-// @ts-ignore
-import  cookies from 'js-cookie'
 
 
 const Home: NextPage = () => {
   const {PageHeader} = useHeader()
-  console.log(cookies);
   return (
     <>
       {PageHeader}

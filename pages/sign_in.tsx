@@ -1,10 +1,12 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import React from 'react';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {withSession} from '../lib/withSession';
 import {User} from '../src/entity/User';
 import {useForm} from '../hooks/useForm';
 import qs from 'querystring'
+// @ts-ignore
+import  Cookies from 'js-cookie'
 
 const SignIn: NextPage<{ user: User }> = (props) => {
   const {form} = useForm(
@@ -20,10 +22,11 @@ const SignIn: NextPage<{ user: User }> = (props) => {
       buttons: <button type='submit'>登录</button>,
       submit:{
         request:formData => axios.post(`/api/v1/sessions`, formData),
-        success:()=>{
+        success:(res:AxiosResponse)=>{
           window.alert('登录成功')
+          const user = res.data
           const query = qs.parse(window.location.search.substr(1))
-          console.log(query);
+          Cookies.set('user', JSON.stringify(user), { expires: 1 });
           Object.keys(query).length !== 0 ?
             window.location.href = query.returnTo.toString()
             : window.location.href = '/posts'
