@@ -48,6 +48,9 @@ var CreatePosts1617556039430 = /*#__PURE__*/function () {
                   }, {
                     name: 'author_id',
                     type: 'int'
+                  }, {
+                    name: 'tags',
+                    type: 'text'
                   }]
                 }));
 

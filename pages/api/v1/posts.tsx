@@ -6,10 +6,12 @@ import {withSession} from '../../../lib/withSession';
 
 const Posts: NextApiHandler = withSession(async (req, res) => {
   if (req.method === 'POST') {
-    const {title, content} = req.body;
+    const {title, content} = req.body.posts;
+    const tags =  req.body.posts.tags
     const post = new Post();
     post.title = title;
     post.content = content;
+    post.tags = tags.join(',')
     const user = req.session.get('currentUser');
     if (!user) {
       res.statusCode = 401;
@@ -18,7 +20,7 @@ const Posts: NextApiHandler = withSession(async (req, res) => {
     }
     post.author = user;
     const connection = await getDatabaseConnection();
-    await connection.manager.save(post);
+    await connection.manager.save(post)
     res.json(post);
   }
 

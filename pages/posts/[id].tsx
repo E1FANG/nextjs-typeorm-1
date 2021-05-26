@@ -9,6 +9,8 @@ import axios from 'axios';
 import {useRouter} from 'next/router';
 import {User} from '../../src/entity/User';
 import {useGoback} from '../../hooks/useGoback';
+import {Tag,Divider } from 'antd';
+import {EditOutlined} from '@ant-design/icons';
 
 type Props = {
   id: number;
@@ -16,7 +18,11 @@ type Props = {
   currentUser: User | null;
 }
 const postsShow: NextPage<Props> = (props) => {
+  console.log(props);
   const {post, currentUser, id} = props;
+  const tags = post.tags.split(',')
+  console.log(props.post);
+  console.log(currentUser);
   const {back} = useGoback('/posts')
   const router = useRouter()
   const onRemove = useCallback(() => {
@@ -32,7 +38,17 @@ const postsShow: NextPage<Props> = (props) => {
       <div className="wrapper">
         <header>
           <h1> {back}{post.title}</h1>
-          {currentUser &&
+          <div>
+            <Tag icon={<EditOutlined />} color="#55acee">
+              作者：{post.author.username}
+            </Tag>
+            {tags.map(element =>
+              <Tag   color="red">
+                <span> {element}</span>
+              </Tag>)}
+          </div>
+          <Divider />
+          {currentUser && currentUser.id===post.author.id &&
           <p className="actions">
             <Link href="/posts/[id]/edit" as={`/posts/${post.id}/edit`}><a>编辑</a></Link>
             <button onClick={onRemove}>删除</button>
@@ -54,7 +70,7 @@ const postsShow: NextPage<Props> = (props) => {
         margin: 16px auto;
         padding: 0 16px;
       }
-      h1{padding-bottom: 16px; border-bottom: 1px solid #666;}
+      h1{margin: 0}
       `}</style>
     </>
   );
@@ -66,8 +82,14 @@ export const getServerSideProps: GetServerSideProps<any, { id: string }> = withS
   async (context: GetServerSidePropsContext) => {
     const connection = await getDatabaseConnection();
     const id = context.params.id;
-    const post = await connection.manager.findOne('Post', id);
+    // const post = await connection.manager.findOne('Post', id);
     const currentUser = (context.req as any).session.get('currentUser') || null;
+    const post = await connection
+      .getRepository(Post)
+      .createQueryBuilder("post")
+      .leftJoinAndSelect("post.author", "author")
+      .where('post.id = :id', {id})
+      .getOne();
     return {
       props: {
         id: parseInt(id.toString()),

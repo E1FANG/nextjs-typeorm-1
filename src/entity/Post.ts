@@ -18,6 +18,8 @@ export class Post {
   title: string;
   @Column('text')
   content: string;
+  @Column('text')
+  tags: string;
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
