@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CreatePosts1617556039430 = void 0;
+exports.CreateTag1622013446064 = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -17,12 +17,12 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _typeorm = require("typeorm");
 
-var CreatePosts1617556039430 = /*#__PURE__*/function () {
-  function CreatePosts1617556039430() {
-    (0, _classCallCheck2["default"])(this, CreatePosts1617556039430);
+var CreateTag1622013446064 = /*#__PURE__*/function () {
+  function CreateTag1622013446064() {
+    (0, _classCallCheck2["default"])(this, CreateTag1622013446064);
   }
 
-  (0, _createClass2["default"])(CreatePosts1617556039430, [{
+  (0, _createClass2["default"])(CreateTag1622013446064, [{
     key: "up",
     value: function () {
       var _up = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(queryRunner) {
@@ -32,7 +32,7 @@ var CreatePosts1617556039430 = /*#__PURE__*/function () {
               case 0:
                 _context.next = 2;
                 return queryRunner.createTable(new _typeorm.Table({
-                  name: 'posts',
+                  name: 'tags',
                   columns: [{
                     name: 'id',
                     isGenerated: true,
@@ -40,14 +40,8 @@ var CreatePosts1617556039430 = /*#__PURE__*/function () {
                     generationStrategy: 'increment',
                     isPrimary: true
                   }, {
-                    name: 'title',
+                    name: 'tagName',
                     type: 'varchar'
-                  }, {
-                    name: 'content',
-                    type: 'text'
-                  }, {
-                    name: 'author_id',
-                    type: 'int'
                   }]
                 }));
 
@@ -74,7 +68,7 @@ var CreatePosts1617556039430 = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return queryRunner.dropTable('posts');
+                return queryRunner.dropTable('tags');
 
               case 2:
               case "end":
@@ -91,7 +85,7 @@ var CreatePosts1617556039430 = /*#__PURE__*/function () {
       return down;
     }()
   }]);
-  return CreatePosts1617556039430;
+  return CreateTag1622013446064;
 }();
 
-exports.CreatePosts1617556039430 = CreatePosts1617556039430;
+exports.CreateTag1622013446064 = CreateTag1622013446064;

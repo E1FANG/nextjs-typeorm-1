@@ -42,8 +42,8 @@ const postsShow: NextPage<Props> = (props) => {
             <Tag icon={<EditOutlined />} color="#55acee">
               作者：{post.author.username}
             </Tag>
-            {tags.map(element =>
-              <Tag   color="red">
+            {tags.map((element,index) =>
+              <Tag color="red" key={index}>
                 <span> {element}</span>
               </Tag>)}
           </div>
