@@ -1,18 +1,16 @@
 import Link from 'next/link';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {Layout, Menu, Avatar, Dropdown, Button, Row, Col} from 'antd';
 import {useRouter} from 'next/router';
 // @ts-ignore
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import {HomeOutlined, UnorderedListOutlined,createFromIconfontCN } from '@ant-design/icons';
-
-const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2577502_3q3fgy3uzkl.js',
-});
+import {HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {useIcon} from './useIcon';
 
 export const useHeader = () => {
   const {Header} = Layout;
+  const {IconFont} = useIcon()
   const defaultSelectedKeys = useRouter().pathname === '/posts' ? ['2'] : ['1'];
   // const user = Cookies.get('user') || null;
   const [user, setUser] = useState(null);
@@ -37,12 +35,12 @@ export const useHeader = () => {
     <>
       <div className="page-header">
         <Row>
-          <Col span={6} style={{paddingLeft:"50px",fontSize:"16px"}}>
-            <IconFont type="icon-wode" />
+          <Col lg={4} md={8} xs={0} style={{fontSize:"16px",textAlign:'center'}}>
+            <IconFont type="icon-river"/>
             Hasson's Blog
           </Col>
-          <Col span={12}></Col>
-          <Col span={6}>
+          <Col lg={8} md={0} xs={0}></Col>
+          <Col lg={12} md={16} xs={24}>
             <div className="nav-wrapper">
               <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys}>
                 <Menu.Item key="1" icon={<HomeOutlined />}>

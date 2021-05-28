@@ -1,10 +1,5 @@
 @import '~antd/dist/antd.css';
 @import 'index.scss';
-body{
-  h1{
-    //color: blue!important;
-  }
-}
 .page-header .ant-col{
   line-height: 67px;
   border: 0;
@@ -17,10 +12,22 @@ body{
 .ant-menu-horizontal{
   border:none;
 }
-.ant-tag{
-  //margin-top: 10px;
-  //padding: 5px !important;
-}
 .anticon{
   margin-right: 10px;
+}
+
+
+.ant-card {
+  margin: 15px !important;
+}
+.ant-card-body{
+  padding:16px 24px;
+}
+.card-wrapper:hover{
+  background: rgb(239,251,255);
+  box-shadow: 1px 1px 10px #ddd;
+}
+.ant-divider-inner-text{
+  margin-bottom: 28px;
+  font-size: 28px;
 }
