@@ -3,9 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn, OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn, Unique,
+  OneToMany,
+  PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 import {Post} from './Post';

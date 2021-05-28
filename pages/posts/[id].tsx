@@ -10,7 +10,7 @@ import {useRouter} from 'next/router';
 import {User} from '../../src/entity/User';
 import {useGoback} from '../../hooks/useGoback';
 import {Tag,Divider } from 'antd';
-import {EditOutlined} from '@ant-design/icons';
+import {EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
 
 type Props = {
   id: number;
@@ -18,11 +18,9 @@ type Props = {
   currentUser: User | null;
 }
 const postsShow: NextPage<Props> = (props) => {
-  console.log(props);
   const {post, currentUser, id} = props;
+  console.log(post);
   const tags = post.tags.split(',')
-  console.log(props.post);
-  console.log(currentUser);
   const {back} = useGoback('/posts')
   const router = useRouter()
   const onRemove = useCallback(() => {
@@ -39,13 +37,24 @@ const postsShow: NextPage<Props> = (props) => {
         <header>
           <h1> {back}{post.title}</h1>
           <div>
+            <EyeOutlined />{post.viewCount}
+            <Divider type="vertical" />
             <Tag icon={<EditOutlined />} color="#55acee">
               作者：{post.author.username}
             </Tag>
+            {/*<EditOutlined />*/}
+            {/*<Tag color="#55acee">*/}
+            {/*  {post.author.username}*/}
+            {/*</Tag>*/}
+            <Divider type="vertical" />
+            <TagsOutlined />
             {tags.map((element,index) =>
               <Tag color="red" key={index}>
                 <span> {element}</span>
               </Tag>)}
+            <Divider type="vertical" />
+            更新于：
+            {new Date(post.updatedAt).toDateString()}
           </div>
           <Divider />
           {currentUser && currentUser.id===post.author.id &&
@@ -70,7 +79,7 @@ const postsShow: NextPage<Props> = (props) => {
         margin: 16px auto;
         padding: 0 16px;
       }
-      h1{margin: 0}
+      header> div,h1{text-align: center}
       `}</style>
     </>
   );
@@ -84,12 +93,20 @@ export const getServerSideProps: GetServerSideProps<any, { id: string }> = withS
     const id = context.params.id;
     // const post = await connection.manager.findOne('Post', id);
     const currentUser = (context.req as any).session.get('currentUser') || null;
-    const post = await connection
+    let post = await connection
       .getRepository(Post)
       .createQueryBuilder("post")
       .leftJoinAndSelect("post.author", "author")
       .where('post.id = :id', {id})
       .getOne();
+    const viewCount = post.viewCount +1
+    await connection
+      .createQueryBuilder()
+      .update(Post)
+      .set({ viewCount:viewCount})
+      .where("id = :id", { id: 1 })
+      .execute();
+    post = {...post,viewCount}
     return {
       props: {
         id: parseInt(id.toString()),

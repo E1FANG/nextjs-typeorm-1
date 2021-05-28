@@ -4,7 +4,6 @@ import {Post} from 'src/entity/Post';
 import {User} from 'src/entity/User';
 import {Comment} from 'src/entity/Comment';
 import config from 'ormconfig.json';
-import {Tag} from 'src/entity/Tag';
 
 const create = async () => {
   // @ts-ignore
@@ -14,7 +13,7 @@ const create = async () => {
     // host:'localhost',
     database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
     // database: 'blog_production',
-    entities: [Post, User, Comment,Tag]
+    entities: [Post, User, Comment]
   });
 };
 

@@ -21,6 +21,7 @@ export const useGoback =(url:url)=>{
       <style jsx>{`
       
       span {
+      float: left;
         color: #666;
         cursor:pointer;
       }

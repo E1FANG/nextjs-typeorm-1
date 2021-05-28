@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinTable, ManyToMany,
+  Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import {User} from './User';
 import {Comment} from './Comment';
-import {Tag} from './Tag';
 
 @Entity('posts')
 export class Post {
@@ -19,8 +18,8 @@ export class Post {
   title: string;
   @Column('text')
   content: string;
-  // @Column('text')
-  // tags: string;
+  @Column('text')
+  tags: string;
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
@@ -29,10 +28,6 @@ export class Post {
   author: User;
   @OneToMany('Comment', 'post')
   comments: Comment[];
-  @ManyToMany(
-    () => Tag,
-    tagName => tagName.posts
-  )
-  @JoinTable()
-  tagName: Tag[]
+  @Column({ type: 'int', nullable: true })
+  viewCount: number
 }
