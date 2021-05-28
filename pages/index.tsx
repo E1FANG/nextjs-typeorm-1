@@ -1,16 +1,12 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
-import Link from 'next/link';
 import React, {PropsWithChildren} from 'react';
 import {useHeader} from '../hooks/useHeader';
 import {Row, Col, Card} from 'antd';
 import {useCard} from '../hooks/useCard';
 import {withSession} from '../lib/withSession';
-import qs from 'querystring';
 import {getDatabaseConnection} from '../lib/getDatabaseConnection';
 import {Post} from '../src/entity/Post';
-import {User} from '../src/entity/User';
 import {useIcon} from '../hooks/useIcon';
-import axios from 'axios';
 
 type Props = {
   posts: Post[];

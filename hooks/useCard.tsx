@@ -5,6 +5,7 @@ import {Card, Divider, Tag} from 'antd';
 import {Post} from 'src/entity/Post';
 import marked from 'marked';
 import {EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 export const useCard = (props: Post) => {
   const {id,content,title,updatedAt,viewCount} = props
@@ -20,7 +21,7 @@ export const useCard = (props: Post) => {
             <Divider className="card-title" orientation="left">
               {title}
               <span className="updataAt">
-                {new Date(updatedAt).toDateString()}
+                {dayjs(updatedAt).format('YYYY-MM-DD HH:mm:ss')}
               </span>
             </Divider>
           <article className="markdown-body" dangerouslySetInnerHTML={{__html: marked(content)}}></article>

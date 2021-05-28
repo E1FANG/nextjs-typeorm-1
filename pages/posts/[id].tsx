@@ -13,6 +13,7 @@ import {useGoback} from '../../hooks/useGoback';
 import {Tag, Divider, Comment, List, Avatar} from 'antd';
 import {EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
 import {useSendComment} from '../../hooks/useSendComment';
+import dayjs from 'dayjs';
 
 type Props = {
   id: number;
@@ -22,8 +23,6 @@ type Props = {
 }
 const postsShow: NextPage<Props> = (props) => {
   const {post, currentUser, id, comments} = props;
-  // console.log(post);
-  console.log(comments);
   const tags = post.tags.split(',');
   const {back} = useGoback('/posts');
   const {sendComment} = useSendComment({post, currentUser});
@@ -55,8 +54,7 @@ const postsShow: NextPage<Props> = (props) => {
                 <span> {element}</span>
               </Tag>)}
             <Divider type="vertical"/>
-            更新于：
-            {new Date(post.updatedAt).toDateString()}
+            更新于：{dayjs(post.updatedAt).format('YYYY-MM-DD HH:mm:ss')}
           </div>
           <Divider/>
           {currentUser && currentUser.id === post.author.id &&
@@ -91,7 +89,7 @@ const postsShow: NextPage<Props> = (props) => {
                     </Avatar>
                   }
                   content={item.content}
-                  datetime={new Date(item.updatedAt).toLocaleString()}
+                  datetime={dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}
                 />
               </li>
             )}
