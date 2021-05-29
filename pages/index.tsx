@@ -7,6 +7,7 @@ import {withSession} from '../lib/withSession';
 import {getDatabaseConnection} from '../lib/getDatabaseConnection';
 import {Post} from '../src/entity/Post';
 import {useIcon} from '../hooks/useIcon';
+import {Comment as entityComment} from '../src/entity/Comment';
 
 type Props = {
   posts: Post[];
@@ -71,8 +72,13 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = withSession(
   async (context: GetServerSidePropsContext) => {
     const connection = await getDatabaseConnection();
-    const [posts, count] = await connection.manager.findAndCount(Post,
-      {skip: 0, take: 5});
+    const postRepository = connection.getRepository(Post);
+    const posts = await postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.comments', 'comment')
+      .orderBy("post.viewCount",'DESC')
+      .take(5)
+      .getMany()
     return {
       props: {
         posts: JSON.parse(JSON.stringify(posts)),

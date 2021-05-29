@@ -4,11 +4,11 @@ import {useRouter} from 'next/router';
 import {Card, Divider, Tag} from 'antd';
 import {Post} from 'src/entity/Post';
 import marked from 'marked';
-import {EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
+import {CommentOutlined, EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 export const useCard = (props: Post) => {
-  const {id,content,title,updatedAt,viewCount} = props
+  const {id,content,title,updatedAt,viewCount,comments} = props
   const tags = props.tags.split(',')
   const router = useRouter()
   const toArticle =()=>{
@@ -28,6 +28,8 @@ export const useCard = (props: Post) => {
             <Divider />
             <div className="card-footer">
               <div>
+                <CommentOutlined />{comments.length}
+                <Divider type="vertical" />
                 <EyeOutlined />{viewCount}
                 <Divider type="vertical" />
                 {/*<Tag icon={<EditOutlined //!*>} color="#55acee">*/}

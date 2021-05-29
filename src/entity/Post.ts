@@ -29,5 +29,5 @@ export class Post {
   @OneToMany('Comment', 'post')
   comments: Comment[];
   @Column({ type: 'int', nullable: true })
-  viewCount: number
+  viewCount: number;
 }

@@ -23,6 +23,7 @@ type Props = {
 }
 const postsShow: NextPage<Props> = (props) => {
   const {post, currentUser, id, comments} = props;
+  console.log(comments);
   const tags = post.tags.split(',');
   const {back} = useGoback('/posts');
   const {sendComment} = useSendComment({post, currentUser});
@@ -74,6 +75,7 @@ const postsShow: NextPage<Props> = (props) => {
             className="comment-list"
             header={`${comments.length} 条评论`}
             itemLayout="horizontal"
+            // dataSource={comments.length!== 0 ? comments:null}
             dataSource={comments}
             renderItem={item => (
               <li>
@@ -126,7 +128,6 @@ export const getServerSideProps: GetServerSideProps<any, { id: string }> = withS
     const connection = await getDatabaseConnection();
     const id = context.params.id;
     const currentUser = (context.req as any).session.get('currentUser') || null;
-
     let post = await connection
       .getRepository(Post)
       .createQueryBuilder('post')
@@ -143,7 +144,6 @@ export const getServerSideProps: GetServerSideProps<any, { id: string }> = withS
       .execute();
 
     post = {...post, viewCount};
-
 
     const commentRepository = connection.getRepository(entityComment);
     const comments = (await commentRepository.find({relations: ['user'], where: {post: post}}));
