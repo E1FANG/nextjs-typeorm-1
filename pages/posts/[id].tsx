@@ -38,7 +38,6 @@ const postsShow: NextPage<Props> = (props) => {
   return (
     <>
       <div className="wrapper">
-        {/*<button onClick={sendComment}>comments</button>*/}
         <header>
           <h1> {back}{post.title}</h1>
           <div>

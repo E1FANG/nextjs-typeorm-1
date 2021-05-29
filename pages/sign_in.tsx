@@ -35,9 +35,6 @@ const SignIn: NextPage<{ user: User }> = (props) => {
     });
   return (
     <>
-      {/*{props.user &&*/}
-      {/*<div>当前登录的用户是 {props.user.username}</div>*/}
-      {/*}*/}
       <h1>登录</h1>
       {form}
     </>);

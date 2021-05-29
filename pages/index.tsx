@@ -37,7 +37,6 @@ const Home: NextPage = (props: PropsWithChildren<Props>) => {
                 <span>语雀</span>
               </a>
             </div>
-            {/*<p><Link href="/posts"><a>文章列表</a></Link></p>*/}
           </div>
           </Card>
         </Col>

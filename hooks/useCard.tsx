@@ -20,11 +20,11 @@ export const useCard = (props: Post) => {
           <Card className="card-wrapper" onClick={toArticle}>
             <Divider className="card-title" orientation="left">
               {title}
-              <span className="updataAt">
+              <span className="updateAt">
                 {dayjs(updatedAt).format('YYYY-MM-DD HH:mm:ss')}
               </span>
             </Divider>
-          <article className="markdown-body" dangerouslySetInnerHTML={{__html: marked(content)}}></article>
+          <article className="markdown-body" dangerouslySetInnerHTML={{__html: marked(content)}} />
             <Divider />
             <div className="card-footer">
               <div>
@@ -55,7 +55,7 @@ export const useCard = (props: Post) => {
         .card-title span{
         font-size: 24px!important;
         }
-        .updataAt{
+        .updateAt{
         margin-left: 24px;
         font-size: 12px!important;
         color:rgba(0,0,0,.85)

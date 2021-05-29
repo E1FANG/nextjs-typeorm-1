@@ -9,8 +9,6 @@ import {usePager} from '../../hooks/usePager';
 import {User} from '../../src/entity/User';
 import {useGoback} from '../../hooks/useGoback';
 import {useHeader} from '../../hooks/useHeader';
-import {Tag} from 'antd';
-import {CheckCircleOutlined} from '@ant-design/icons';
 
 type Props = {
   currentUser:User | null;
