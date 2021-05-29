@@ -3,6 +3,7 @@ import React, {ChangeEvent, useState} from 'react';
 import axios from 'axios';
 import {Post} from '../src/entity/Post';
 import {User} from '../src/entity/User';
+import {Comment} from '../src/entity/Comment';
 
 const {TextArea} = Input;
 
@@ -10,9 +11,10 @@ type options = {
   // content:string;
   post: Post;
   currentUser: User;
+  updateComment:(comment:Comment)=>void
 }
 export const useSendComment = (options: options) => {
-  const {post, currentUser} = options;
+  const {post, currentUser,updateComment} = options;
   const [value, setValue] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,9 +31,10 @@ export const useSendComment = (options: options) => {
     }).then(res => {
       setValue('')
       setSubmitting(false)
+      updateComment(res.data)
+      message.success('sendComment succeeded');
     });
   };
-  // const onChange = (e:ChangeEvent<HTMLTextAreaElement>)=>{
   const onChange = (e: string) => {
     setValue(e);
   };

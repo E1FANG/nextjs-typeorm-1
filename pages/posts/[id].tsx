@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
 import {Post} from '../../src/entity/Post';
@@ -22,11 +22,10 @@ type Props = {
   comments: entityComment[]
 }
 const postsShow: NextPage<Props> = (props) => {
-  const {post, currentUser, id, comments} = props;
-  console.log(comments);
+  const {post, currentUser, id} = props;
+  const [comments,setComments] = useState(props.comments)
   const tags = post.tags.split(',');
   const {back} = useGoback('/posts');
-  const {sendComment} = useSendComment({post, currentUser});
   const router = useRouter();
   const onRemove = useCallback(() => {
     axios.delete(`/api/v1/posts/${id}`).then(() => {
@@ -36,6 +35,10 @@ const postsShow: NextPage<Props> = (props) => {
       window.alert('删除失败');
     });
   }, [id]);
+  const updateComment =(newComment:entityComment)=>{
+    setComments((comments)=> [newComment,...comments])
+  }
+  const {sendComment} = useSendComment({post, currentUser,updateComment});
   return (
     <>
       <div className="wrapper">
