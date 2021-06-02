@@ -9,6 +9,9 @@
 .page-header .ant-menu-item{
   padding: 10px 10px !important;
 }
+.nav-wrapper .ant-menu{
+  min-width: 260px;
+}
 .ant-menu-horizontal{
   border:none;
 }

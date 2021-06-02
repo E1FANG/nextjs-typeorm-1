@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Post} from '../src/entity/Post';
 import {User} from '../src/entity/User';
 import {Comment} from '../src/entity/Comment';
+import Link from 'next/link';
 
 const {TextArea} = Input;
 
@@ -42,18 +43,21 @@ export const useSendComment = (options: options) => {
     <>
       <div className="comment-wrapper">
         <div className="avatar-warpper">
+          {currentUser ?
           <Avatar size={35} style={{color: '#fff', backgroundColor: 'rgb(24,144,255)'}}>
                     <span>
                       {currentUser.username}
                     </span>
-          </Avatar>
+          </Avatar> :
+            <Link href="/sign_in"><a>请登录</a></Link>
+          }
         </div>
         <div className="form-wrapper">
           <Form.Item>
             <TextArea rows={4} onChange={(e) => onChange(e.target.value)} value={value}/>
           </Form.Item>
           <Form.Item>
-            <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+            <Button htmlType="submit" disabled={currentUser===null} loading={submitting} onClick={onSubmit} type="primary">
               Add Comment
             </Button>
           </Form.Item>
