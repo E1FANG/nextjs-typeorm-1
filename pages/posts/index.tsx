@@ -30,7 +30,7 @@ const PostsIndex: NextPage<Props> = (props) => {
       <div className="posts">
         <header>
           <h1>{back}文章列表</h1>
-          {currentUser && <Link href="/posts/new"><a>新增文章</a></Link>}
+          {currentUser.username==='admin' && <Link href="/posts/new"><a>新增文章</a></Link>}
         </header>
         {posts.map(post =>
           <div className="onePost" key={post.id} >

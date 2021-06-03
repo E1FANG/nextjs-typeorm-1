@@ -13,3 +13,5 @@ declare module 'next' {
     session:Session
   }
 }
+
+type  tagListData =string[]

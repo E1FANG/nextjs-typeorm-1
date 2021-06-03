@@ -9,15 +9,10 @@ const layout = {
   wrapperCol: {span: 16},
 };
 const { Search } = Input;
-type options = {
-  tag: string
-}
-
 const PostsNew: NextPage = () => {
   const [tags, setTags] = useState(['JavaScript']);
   const onFinish = (values: any) => {
     values.posts = {...values.posts,tags}
-    console.log(values);
     axios.post(`/api/v1/posts`, values).then(res=>{
       const result = res.data
       window.alert('提交成功')

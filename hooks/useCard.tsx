@@ -6,17 +6,18 @@ import {Post} from 'src/entity/Post';
 import marked from 'marked';
 import {CommentOutlined, EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
 import dayjs from 'dayjs';
+import {useTags} from './useTags';
 
 export const useCard = (props: Post) => {
   const {id,content,title,updatedAt,viewCount,comments} = props
-  const tags = props.tags.split(',')
+  const tagListData = props.tags.split(',')
   const router = useRouter()
+  const {tagList} = useTags({tagListData});
   const toArticle =()=>{
     router.push(`/posts/${id}`)
   }
   const cards = (
       <>
-        {/*<Card className="card-wrapper" title={title} extra={<a href="#">More</a>}>*/}
           <Card className="card-wrapper" onClick={toArticle}>
             <Divider className="card-title" orientation="left">
               {title}
@@ -37,10 +38,7 @@ export const useCard = (props: Post) => {
                 {/*</Tag>*!/*/}
                 <Divider type="vertical" />
                 <TagsOutlined />
-                {tags.map((element:string,index:number) =>
-                  <Tag color="red" key={index}>
-                    <span> {element}</span>
-                  </Tag>)}
+                {tagList}
               </div>
             </div>
         </Card>
