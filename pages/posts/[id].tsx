@@ -14,6 +14,7 @@ import {Tag, Divider, Comment, List, Avatar} from 'antd';
 import {EditOutlined, EyeOutlined, TagsOutlined} from '@ant-design/icons';
 import {useSendComment} from '../../hooks/useSendComment';
 import dayjs from 'dayjs';
+import {useTags} from '../../hooks/useTags';
 
 type Props = {
   id: number;
@@ -24,7 +25,8 @@ type Props = {
 const postsShow: NextPage<Props> = (props) => {
   const {post, currentUser, id} = props;
   const [comments,setComments] = useState(props.comments)
-  const tags = post.tags.split(',');
+  const tagListData = post.tags.split(',');
+  const {tagList} = useTags({tagListData});
   const {back} = useGoback('/posts');
   const router = useRouter();
   const onRemove = useCallback(() => {
@@ -52,11 +54,7 @@ const postsShow: NextPage<Props> = (props) => {
             </Tag>
             <Divider type="vertical"/>
             <TagsOutlined/>
-            {tags.map((element, index) =>
-              <Tag color="red" key={index}>
-                <span> {element}</span>
-              </Tag>)}
-            <Divider type="vertical"/>
+            {tagList}
             更新于：{dayjs(post.updatedAt).format('YYYY-MM-DD HH:mm:ss')}
           </div>
           <Divider/>

@@ -11,6 +11,7 @@ import {Comment as entityComment} from '../src/entity/Comment';
 import {useTags} from '../hooks/useTags';
 import {tagListData} from '../next-env';
 import _ from 'lodash';
+import Link from 'next/link';
 
 type Props = {
   TopPosts: Post[];
@@ -64,9 +65,11 @@ const Home: NextPage = (props: PropsWithChildren<Props>) => {
           <Card title="热门文章">
             <ul className="hot-list">
               {posts.map((item) =>
-              // {TopPosts.map((item) =>
                 <li key={item.id}>
-                  {item.title}
+                  <Link href={`/posts/${item.id}`}><a>
+                    {item.title}
+                  </a>
+                  </Link>
                 </li>
               )}
             </ul>
@@ -91,15 +94,15 @@ const Home: NextPage = (props: PropsWithChildren<Props>) => {
           padding: 0;
           list-style: none;
         }
-
-        .hot-list li {
+        .hot-list li{
+          margin-bottom: 8px;
+        }
+        .hot-list a {
           color: #8590a6;
           cursor: pointer;
-          margin-bottom: 5px;
           font-size: 15px;
           word-break: break-all;
           white-space: pre-line;
-
         }
       `}</style>
     </>
