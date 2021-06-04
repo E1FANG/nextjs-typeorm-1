@@ -1,5 +1,6 @@
 import {ChangeEventHandler, ReactChild, useCallback, useState} from 'react';
 import {AxiosResponse} from 'axios';
+import {  Input } from 'antd';
 import cs from 'classnames';
 
 type Field<T> = {
@@ -68,7 +69,7 @@ export function useForm<T>(options: useFormOptions<T>) {
                         onChange={(e) => onChange(field.key, e.target.value)}
                         value={formData[field.key].toString()}/>
               :
-              <input className="control"
+              <Input className="control"
                      type={field.type} value={formData[field.key].toString()}
                      onChange={(e) => onChange(field.key, e.target.value)}/>
             }
@@ -93,6 +94,7 @@ export function useForm<T>(options: useFormOptions<T>) {
         height: 32px;
       }
       .label > .label-text{
+        width: 5em;
         white-space: nowrap;
         margin-right: 1em;
       }

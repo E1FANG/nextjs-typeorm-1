@@ -5,13 +5,21 @@ import {useRouter} from 'next/router';
 // @ts-ignore
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import {HomeOutlined, UnorderedListOutlined, SearchOutlined} from '@ant-design/icons';
+import {HomeOutlined, UnorderedListOutlined, SearchOutlined,UserOutlined} from '@ant-design/icons';
 import {useIcon} from './useIcon';
 
 export const useHeader = () => {
   const {IconFont} = useIcon()
   const router = useRouter();
-  const defaultSelectedKeys = router.pathname === '/posts' ? ['2'] : ['1'];
+  const defaultSelectedKeys = ()=>{
+    if( router.pathname.indexOf('/posts') != -1){
+      return ['2']
+      }else if(router.pathname.indexOf('/about') != -1){
+      return['3']
+    }else{
+      return  ['1']
+    }
+  }
   const [user, setUser] = useState(null);
   useEffect(() => {
     setUser(() => Cookies.get('user') || null);
@@ -52,15 +60,15 @@ export const useHeader = () => {
           </Col>
           <Col lg={10} md={11} xs={24}>
             <div className="nav-wrapper">
-              <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys}>
+              <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys()}>
                 <Menu.Item key="1" icon={<HomeOutlined />}>
                   <Link href="/"><a>首页</a></Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<UnorderedListOutlined />}>
                   <Link href="/posts"><a>文章列表</a></Link>
                 </Menu.Item>
-                <Menu.Item key="3" icon={<UnorderedListOutlined />}>
-                  <Link href="/posts"><a>关于</a></Link>
+                <Menu.Item key="3" icon={<UserOutlined />}>
+                  <Link href="/about"><a>关于</a></Link>
                 </Menu.Item>
               </Menu>
 
