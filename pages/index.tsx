@@ -27,7 +27,7 @@ const Home: NextPage = (props: PropsWithChildren<Props>) => {
   return (
     <>
       {PageHeader}
-      <Row>
+      <Row >
         <Col lg={5} md={6} xs={0}>
           <Card>
             <div className="siderBar">

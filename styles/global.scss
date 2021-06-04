@@ -10,9 +10,14 @@
   padding: 10px 10px !important;
 }
 .nav-wrapper .ant-menu{
-  min-width: 260px;
+  min-width: 370px;
 }
-.ant-menu-horizontal{
+@media screen and (max-width: 800px) {
+  .nav-wrapper .ant-menu{
+    min-width: auto;
+  }
+}
+    .ant-menu-horizontal{
   border:none;
 }
 .anticon{
@@ -45,4 +50,31 @@
 .ant-timeline .ant-timeline-item{
   padding-bottom: 24px;
   font-size: 16px;
+}
+.search-wrapper {
+  .ant-input-affix-wrapper {
+    margin-left: 15px;
+    border: none;
+
+    .ant-input:focus {
+      border-right-width: unset !important;
+    }
+
+    .ant-input-lg:focus {
+      border: none;
+      border-right-width: unset !important;
+    }
+  }
+  .ant-input-affix-wrapper:focus{
+    border-right-width: unset !important;
+    box-shadow:none !important;
+  }
+  .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border: none;
+    border-right-width: 0px !important;
+    z-index: 1;
+  }
+  .ant-input-affix-wrapper-focused{
+    box-shadow: none !important;
+  }
 }

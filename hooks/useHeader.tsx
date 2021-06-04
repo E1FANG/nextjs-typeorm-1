@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import React, { useEffect, useState} from 'react';
-import {Layout, Menu, Avatar, Dropdown, Button, Row, Col} from 'antd';
+import {Menu, Avatar, Dropdown, Button, Row, Col, Input, Divider} from 'antd';
 import {useRouter} from 'next/router';
 // @ts-ignore
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import {HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {HomeOutlined, UnorderedListOutlined, SearchOutlined} from '@ant-design/icons';
 import {useIcon} from './useIcon';
 
 export const useHeader = () => {
-  const {Header} = Layout;
   const {IconFont} = useIcon()
-  const defaultSelectedKeys = useRouter().pathname === '/posts' ? ['2'] : ['1'];
-  // const user = Cookies.get('user') || null;
+  const router = useRouter();
+  const defaultSelectedKeys = router.pathname === '/posts' ? ['2'] : ['1'];
   const [user, setUser] = useState(null);
   useEffect(() => {
     setUser(() => Cookies.get('user') || null);
@@ -31,16 +30,27 @@ export const useHeader = () => {
       </Menu.Item>
     </Menu>
   );
+
+  const searchTitle = (e: React.KeyboardEvent<HTMLInputElement>)=>{
+    const searchTitleKeyword = e.currentTarget.value
+    router.push(`/posts/search/${searchTitleKeyword}`)
+  }
   const PageHeader = (
     <>
       <div className="page-header">
-        <Row>
-          <Col lg={4} md={8} xs={0} style={{fontSize:"16px",textAlign:'center'}}>
+        <Row justify="space-between" wrap={false}>
+          <Col lg={5} md={8} xs={0} style={{fontSize:"16px",textAlign:'center'}}>
             <IconFont type="icon-river"/>
             Hasson's Blog
           </Col>
-          <Col lg={8} md={0} xs={0}></Col>
-          <Col lg={12} md={16} xs={24}>
+          <Col lg={9} md={0} xs={0}>
+            <div className="search-wrapper">
+              <Input size="large" placeholder="搜索文章标题"
+                     onPressEnter={(e)=>searchTitle(e)}
+                     prefix={<SearchOutlined  style={{color: '#8590a6'}} />} />
+            </div>
+          </Col>
+          <Col lg={10} md={11} xs={24}>
             <div className="nav-wrapper">
               <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys}>
                 <Menu.Item key="1" icon={<HomeOutlined />}>
@@ -48,6 +58,9 @@ export const useHeader = () => {
                 </Menu.Item>
                 <Menu.Item key="2" icon={<UnorderedListOutlined />}>
                   <Link href="/posts"><a>文章列表</a></Link>
+                </Menu.Item>
+                <Menu.Item key="3" icon={<UnorderedListOutlined />}>
+                  <Link href="/posts"><a>关于</a></Link>
                 </Menu.Item>
               </Menu>
 
@@ -96,6 +109,8 @@ export const useHeader = () => {
         }
 
         .user {
+        display: flex;
+        align-items: center;
           line-height: 67px;
         }
         .user span {
