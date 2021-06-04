@@ -1,6 +1,6 @@
 import React, {ReactChild} from 'react';
 import {useRouter} from 'next/router';
-import {CaretLeftOutlined} from '@ant-design/icons';
+import {CaretLeftOutlined, LeftOutlined} from '@ant-design/icons';
 
 // type options = {
 //   url:string
@@ -16,8 +16,7 @@ export const useGoback =(url:url)=>{
   }
   const back:ReactChild = (
     <>
-      <span onClick={goBack}><CaretLeftOutlined style={{color:"#333"}}/></span>
-
+      <span onClick={goBack}><LeftOutlined style={{color:"#333"}}/></span>
       <style jsx>{`
       
       span {

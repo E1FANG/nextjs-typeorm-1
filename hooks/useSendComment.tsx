@@ -58,7 +58,7 @@ export const useSendComment = (options: options) => {
           </Form.Item>
           <Form.Item>
             <Button htmlType="submit" disabled={currentUser===null} loading={submitting} onClick={onSubmit} type="primary">
-              Add Comment
+              发送评论
             </Button>
           </Form.Item>
         </div>
