@@ -10,6 +10,9 @@ import Cookies from 'js-cookie';
 import {Button} from 'antd';
 
 const SignIn: NextPage<{ user: User }> = (props) => {
+  const buttons = <button style={{
+    width: 'calc(100% - 5em)', float: 'right',background:'rgb(24,144,255)',color:'white',border:'none',padding:'5px 0'
+  }} type='submit'>登录</button>
   const {form} = useForm(
     {
       initFormData: {username: '', password: ''},
@@ -20,7 +23,8 @@ const SignIn: NextPage<{ user: User }> = (props) => {
         {
           label: '密码', type: 'password', key: 'password'
         }],
-      buttons: <Button style={{width: 'calc(100% - 5em)', float: 'right'}} type='primary'>登录</Button>,
+      // buttons: <Button style={{width: 'calc(100% - 5em)', float: 'right'}} type='primary'>登录</Button>,
+      buttons: buttons,
       submit: {
         request: formData => axios.post(`/api/v1/sessions`, formData),
         success: (res: AxiosResponse) => {

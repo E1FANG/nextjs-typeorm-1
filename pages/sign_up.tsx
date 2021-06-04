@@ -10,6 +10,9 @@ const SignUp: NextPage = () => {
     password: '',
     passwordConfirmation: ''
   };
+  const buttons = <button style={{
+    width: 'calc(100% - 5em)', float: 'right',background:'rgb(24,144,255)',color:'white',border:'none',padding:'5px 0'
+  }} type='submit'>注册</button>
   const {form} = useForm(
     {
       initFormData,
@@ -24,7 +27,7 @@ const SignUp: NextPage = () => {
           label: '确认密码', type: 'password', key: 'passwordConfirmation',
         }
       ],
-      buttons: <Button style={{width:'calc(100% - 5em)',float:'right'}} type='primary'>注册</Button>,
+      buttons: buttons,
       submit:{
         request:formData => axios.post(`/api/v1/users`, formData),
         success:()=>{
