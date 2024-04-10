@@ -29,38 +29,41 @@ var _Comment = require("./entity/Comment");
             manager = connection.manager; //创建 user 1
 
             u1 = new _User.User();
-            u1.username = 'hasson';
+            u1.username = 'hasson3';
+            u1.password = '123';
             u1.passwordDigest = 'xxx';
-            _context.next = 6;
+            _context.next = 7;
             return manager.save(u1);
 
-          case 6:
+          case 7:
             // 创建 post 1
             p1 = new _Post.Post();
             p1.title = 'Post 1';
             p1.content = 'My First Post';
+            p1.tags = 'javascript';
+            p1.viewCount = 0;
             p1.author = u1; //创建关联的好处：通过对象的方式，把u1的id传给post
 
-            _context.next = 12;
+            _context.next = 15;
             return manager.save(p1);
 
-          case 12:
+          case 15:
             //创建 comment 1
             c1 = new _Comment.Comment();
             c1.user = u1;
             c1.post = p1;
             c1.content = 'Cool!';
-            _context.next = 18;
+            _context.next = 21;
             return manager.save(c1);
 
-          case 18:
-            _context.next = 20;
+          case 21:
+            _context.next = 23;
             return connection.close();
 
-          case 20:
+          case 23:
             console.log('OK!');
 
-          case 21:
+          case 24:
           case "end":
             return _context.stop();
         }

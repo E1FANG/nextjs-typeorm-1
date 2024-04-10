@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import {Post} from './Post';
 import {Comment} from './Comment';
-import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
+// import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
 import md5 from 'md5';
 import _ from 'lodash';
 
@@ -50,17 +50,17 @@ export class User {
     if (this.username.trim().length <= 3) {
       this.errors.username.push('太短');
     }
-    const found = await (await getDatabaseConnection()).manager.find(
-      User, {username: this.username});
-    if (found.length > 0) {
-      this.errors.username.push('已存在，不能重复注册');
-    }
-    if (this.password === '') {
-      this.errors.password.push('不能为空');
-    }
-    if (this.password !== this.passwordConfirmation) {
-      this.errors.passwordConfirmation.push('密码不匹配');
-    }
+    // const found = await (await getDatabaseConnection()).manager.find(
+    //   User, {username: this.username});
+    // if (found.length > 0) {
+    //   this.errors.username.push('已存在，不能重复注册');
+    // }
+    // if (this.password === '') {
+    //   this.errors.password.push('不能为空');
+    // }
+    // if (this.password !== this.passwordConfirmation) {
+    //   this.errors.passwordConfirmation.push('密码不匹配');
+    // }
   }
 
   hasErrors() {
@@ -69,6 +69,8 @@ export class User {
 
   @BeforeInsert()
   generatePasswordDigest() {
+    console.log(`------`)
+    console.log(this.password)
     this.passwordDigest = md5(this.password);
   }
 

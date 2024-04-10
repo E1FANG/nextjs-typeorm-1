@@ -51,7 +51,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.1",
     "@types/axios": "^0.14.0",
-    "@types/classnames": "^2.2.10",
+    "@types/classnames": "^2.3.1",
     "@types/lodash": "^4.14.155",
     "@types/marked": "^0.7.4",
     "@types/md5": "^2.2.0",

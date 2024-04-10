@@ -11,7 +11,8 @@ createConnection().then(async connection => {
   const {manager} = connection;
   //创建 user 1
   const u1 = new User()
-  u1.username = 'hasson'
+  u1.username = 'hasson3'
+  u1.password = '123'
   u1.passwordDigest = 'xxx'
   await manager.save(u1)
 
@@ -19,6 +20,8 @@ createConnection().then(async connection => {
   const p1 = new Post()
   p1.title = 'Post 1'
   p1.content = 'My First Post'
+  p1.tags = 'javascript'
+  p1.viewCount = 0
   p1.author = u1  //创建关联的好处：通过对象的方式，把u1的id传给post
   await manager.save(p1)
 
