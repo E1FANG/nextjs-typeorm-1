@@ -1,6 +1,6 @@
 #echo 'start';
-docker start 923 &&
-cd /home/blog/app/ &&
+docker start 674 &&
+cd /root/app/nextjs-typeorm-1/ &&
 git pull &&
 yarn install --production=false &&
 yarn build &&
