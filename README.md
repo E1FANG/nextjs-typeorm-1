@@ -43,8 +43,10 @@ npm run dev
 ## 部署
 自动化部署：
 ```bash
+# 先把代码提交到git
 git push
-ssh blog@47.113.225.0 'bash -s ' < bin/deploy.sh
+# ssh blog@47.113.225.0 'bash -s ' < bin/deploy.sh
+ssh root@110.41.171.41 'sh ~/app/nextjs-typeorm-1/bin/deploy.sh'
 ```
 
 ```bash 
